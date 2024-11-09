@@ -1,13 +1,30 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class SistemaReserva {
-    private List<Sala> salas;
-    private List<Reserva> reservas;
+    private ArrayList<Sala> salas;
+    private ArrayList<Reserva> reservas;
 
     SistemaReserva() {
         this.salas = new ArrayList<>();
         this.reservas = new ArrayList<>();
+    }
+
+    public void addSala(Sala sala) {
+        salas.add(sala);
+    }
+
+    public ArrayList<Sala> listarSalasDisponiveis() {
+        ArrayList<Sala> disponiveis = new ArrayList<>();
+        for (Sala sala : salas) {
+            if (sala.isDisponibilidade()) {
+                disponiveis.add(sala);
+            }
+        }
+        return disponiveis;
+    }
+
+    public ArrayList<Reserva> historicoReservas() {
+        return reservas;
     }
 
 }

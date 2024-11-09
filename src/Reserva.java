@@ -5,6 +5,7 @@ public class Reserva {
 
     public Reserva(Sala sala, String data, String horario) {
         this.sala = sala;
+        sala.setDisponibilidade(false);
         this.data = data;
         this.horario = horario;
     }
