@@ -1,6 +1,3 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class SistemaReserva {
@@ -36,14 +33,6 @@ public class SistemaReserva {
             throw new IllegalArgumentException("Erro: O horário deve ser 'matutino' ou 'vespertino'.");
         }
 
-        // Validar a data (como anteriormente)
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate.parse(data, formatter);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Erro: A data deve estar no formato 'dd/MM/yyyy'.");
-        }
-
         // Verificar conflitos de reserva
         for (Reserva reserva : reservas) {
             if (reserva.getSala().equals(sala) && reserva.getData().equals(data)
@@ -52,7 +41,6 @@ public class SistemaReserva {
             }
         }
 
-        // Criar e armazenar a reserva
         Reserva novaReserva = new Reserva(sala, data, periodo);
         reservas.add(novaReserva);
         return novaReserva;
