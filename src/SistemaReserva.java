@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class SistemaReserva {
     private ArrayList<Sala> salas;
@@ -23,21 +24,21 @@ public class SistemaReserva {
         return disponiveis;
     }
 
-    public ArrayList<Reserva> historicoReservas() {
-        return reservas;
+    public String historicoReservas() {
+        StringBuilder mensage = new StringBuilder("=== Historico de reservas === \n");
+        for (Reserva reserva : reservas) {
+            mensage.append(" - ").append(reserva.getSala().getIdentificacao()).append("\n");
+        }
+        return mensage.toString();
     }
 
     public Reserva reservarSala(Sala sala, String data, String periodo) {
-        // Validar o período
-        if (!periodo.equalsIgnoreCase("matutino") && !periodo.equalsIgnoreCase("vespertino")) {
-            throw new IllegalArgumentException("Erro: O horário deve ser 'matutino' ou 'vespertino'.");
-        }
-
-        // Verificar conflitos de reserva
         for (Reserva reserva : reservas) {
             if (reserva.getSala().equals(sala) && reserva.getData().equals(data)
                     && reserva.getHorario().equalsIgnoreCase(periodo)) {
-                throw new IllegalStateException("Erro: A sala já está reservada para este período e data.");
+                JOptionPane.showMessageDialog(null, "Erro: A sala já está reservada para este período e data.", "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+
             }
         }
 
