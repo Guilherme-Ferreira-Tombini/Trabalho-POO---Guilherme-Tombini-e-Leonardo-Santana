@@ -19,7 +19,7 @@ public class App {
 
             String input = JOptionPane.showInputDialog(null, menu, "Menu de Reservas", JOptionPane.QUESTION_MESSAGE);
 
-            if (input == null || input.trim().isEmpty()) { // Verifica clicou em "Cancelar" ou fechou a janela
+            if (input == null || input.trim().isEmpty()) {
                 opcao = 5;
             } else {
                 try {
@@ -44,19 +44,15 @@ public class App {
                     break;
 
                 case 2:
-                    String inputSala;
                     Sala salaEscolhida = null;
 
                     while (salaEscolhida == null) {
-                        String sala = "Digite a sala desejada entre as disponíveis (Ex: Sala A)";
-                        inputSala = JOptionPane.showInputDialog(null, sala, "Reserva de Salas",
-                                JOptionPane.QUESTION_MESSAGE);
+                        String inputSala = JOptionPane.showInputDialog(null,
+                                "Digite a sala desejada entre as disponíveis (Ex: Sala A)",
+                                "Reserva de Salas", JOptionPane.QUESTION_MESSAGE);
 
-                        if (inputSala == null || inputSala.trim().isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, tente novamente.", "Erro",
-                                    JOptionPane.ERROR_MESSAGE);
-                            continue;
-                        }
+                        if (inputSala == null)
+                            break; // Retorna ao menu inicial
 
                         for (Sala procuraSala : sistema.listarSalasDisponiveis()) {
                             if (procuraSala.getIdentificacao().equalsIgnoreCase(inputSala)
@@ -67,45 +63,90 @@ public class App {
                         }
 
                         if (salaEscolhida == null) {
-                            JOptionPane.showMessageDialog(null, "Sala não encontrada ou não está disponível.", "Erro",
+                            JOptionPane.showMessageDialog(null,
+                                    "Sala não encontrada ou não está disponível.", "Erro",
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     }
+
+                    if (salaEscolhida == null)
+                        break; // Retorna ao menu inicial
 
                     String periodoReserva = "";
                     while (!periodoReserva.equalsIgnoreCase("matutino")
                             && !periodoReserva.equalsIgnoreCase("vespertino")) {
                         periodoReserva = JOptionPane.showInputDialog(null,
-                                "Digite o período (matutino ou vespertino):", "Período da Reserva",
-                                JOptionPane.QUESTION_MESSAGE);
+                                "Digite o período (matutino ou vespertino):",
+                                "Período da Reserva", JOptionPane.QUESTION_MESSAGE);
+
+                        if (periodoReserva == null)
+                            break; // Retorna ao menu inicial
 
                         if (!periodoReserva.equalsIgnoreCase("matutino")
                                 && !periodoReserva.equalsIgnoreCase("vespertino")) {
-                            JOptionPane.showMessageDialog(null, "Erro: O horário deve ser 'matutino' ou 'vespertino'.",
+                            JOptionPane.showMessageDialog(null,
+                                    "Erro: O horário deve ser 'matutino' ou 'vespertino'.",
                                     "Erro", JOptionPane.ERROR_MESSAGE);
                         }
                     }
 
+                    if (periodoReserva == null)
+                        break; // Retorna ao menu inicial
+
                     String dataReserva = JOptionPane.showInputDialog(null,
-                            "Digite a data para reserva (formato: dd/MM/yyyy):", "Data da Reserva",
-                            JOptionPane.QUESTION_MESSAGE);
+                            "Digite a data para reserva (formato: dd/MM/yyyy):",
+                            "Data da Reserva", JOptionPane.QUESTION_MESSAGE);
+
+                    if (dataReserva == null)
+                        break; // Retorna ao menu inicial
 
                     Reserva resultado = sistema.reservarSala(salaEscolhida, dataReserva, periodoReserva);
 
                     StringBuilder mensagemConcluidaReserva = new StringBuilder("=== Reserva Concluída ===\n");
                     mensagemConcluidaReserva.append(resultado.getSala().getIdentificacao()).append("\n")
-                            .append(resultado.getData()).append("\n" + resultado.getHorario());
+                            .append(resultado.getData()).append("\n").append(resultado.getHorario());
 
                     JOptionPane.showMessageDialog(null, mensagemConcluidaReserva.toString(), "Reserva Concluída",
                             JOptionPane.INFORMATION_MESSAGE);
                     break;
 
                 case 3:
+                    Sala salaEscolhidaCancelar = null;
 
+                    while (salaEscolhidaCancelar == null) {
+                        String inputSalaCancelar = JOptionPane.showInputDialog(null,
+                                "Digite a sala desejada entre as indisponíveis (Ex: Sala A)",
+                                "Cancelar Reserva", JOptionPane.QUESTION_MESSAGE);
+
+                        if (inputSalaCancelar == null)
+                            break; // Retorna ao menu inicial
+
+                        for (Sala procuraSala : sistema.listarSalasIndisponiveis()) {
+                            if (procuraSala.getIdentificacao().equalsIgnoreCase(inputSalaCancelar)
+                                    && !procuraSala.isDisponibilidade()) {
+                                salaEscolhidaCancelar = procuraSala;
+                                break;
+                            }
+                        }
+
+                        if (salaEscolhidaCancelar == null) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Sala não encontrada ou não está indisponível.", "Erro",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                    if (salaEscolhidaCancelar == null)
+                        break; // Retorna ao menu inicial
+
+                    sistema.cancelarReserva(salaEscolhidaCancelar);
+                    JOptionPane.showMessageDialog(null,
+                            "Reserva cancelada com sucesso.", "Cancelamento",
+                            JOptionPane.INFORMATION_MESSAGE);
                     break;
 
                 case 4:
-                    JOptionPane.showMessageDialog(null, sistema.historicoReservas(), "Historico de reservas",
+                    JOptionPane.showMessageDialog(null, sistema.historicoReservas(), "Histórico de Reservas",
                             JOptionPane.INFORMATION_MESSAGE);
                     break;
 
@@ -120,5 +161,4 @@ public class App {
             }
         } while (opcao != 5);
     }
-
 }

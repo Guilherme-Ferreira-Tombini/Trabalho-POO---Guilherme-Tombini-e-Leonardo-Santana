@@ -24,6 +24,16 @@ public class SistemaReserva {
         return disponiveis;
     }
 
+    public ArrayList<Sala> listarSalasIndisponiveis() {
+        ArrayList<Sala> indisponiveis = new ArrayList<>();
+        for (Sala sala : salas) {
+            if (sala.isDisponibilidade() == false) {
+                indisponiveis.add(sala);
+            }
+        }
+        return indisponiveis;
+    }
+
     public String historicoReservas() {
         StringBuilder mensage = new StringBuilder("=== Historico de reservas === \n");
         for (Reserva reserva : reservas) {
@@ -47,11 +57,16 @@ public class SistemaReserva {
         return novaReserva;
     }
 
-    public String cancelarReserva(Reserva reserva) {
-        if (reservas.remove(reserva)) {
-            reserva.getSala().setDisponibilidade(true);
-            return "Reserva cancelada com sucesso.";
+    public String cancelarReserva(Sala sala) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getSala().getIdentificacao()
+                    .equalsIgnoreCase(sala.getIdentificacao())) {
+                if (reservas.remove(reserva)) {
+                    reserva.getSala().setDisponibilidade(true);
+                    return "Reserva cancelada com sucesso.";
+                }
+            }
         }
-        return "Erro: Reserva não encontrada.";
+        return "Erro: Reserva não encontrada para cancelamento.";
     }
 }
