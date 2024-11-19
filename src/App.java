@@ -7,10 +7,14 @@ public class App {
         Sala sala1 = new Sala("Sala A", 20, true);
         Sala sala2 = new Sala("Sala B", 15, true);
         Sala sala3 = new Sala("Sala C", 10, true);
+        Sala sala4 = new Sala("Sala D", 25, true);
+        Sala sala5 = new Sala("Sala E", 12, true);
 
         sistema.addSala(sala1);
         sistema.addSala(sala2);
         sistema.addSala(sala3);
+        sistema.addSala(sala4);
+        sistema.addSala(sala5);
 
         int opcao = 0;
 
