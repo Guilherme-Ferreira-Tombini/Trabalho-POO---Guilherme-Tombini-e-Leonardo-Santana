@@ -7,7 +7,6 @@ public class Pessoa {
     Pessoa(String nomeCompleto, String cpf, String email, String senha) {
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
-
         this.email = email;
         this.senha = senha;
     }
