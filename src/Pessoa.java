@@ -1,14 +1,13 @@
 public class Pessoa {
     private String nomeCompleto;
     private String cpf;
-    private String rgm;
     private String email;
     private String senha;
 
-    Pessoa(String nomeCompleto, String cpf, String rgm, String email, String senha) {
+    Pessoa(String nomeCompleto, String cpf, String email, String senha) {
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
-        this.rgm = rgm;
+
         this.email = email;
         this.senha = senha;
     }
@@ -27,14 +26,6 @@ public class Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getRgm() {
-        return rgm;
-    }
-
-    public void setRgm(String rgm) {
-        this.rgm = rgm;
     }
 
     public String getEmail() {

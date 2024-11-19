@@ -135,7 +135,7 @@ public class App {
 
                         if (salaEscolhidaCancelar == null) {
                             JOptionPane.showMessageDialog(null,
-                                    "Sala não encontrada ou não está indisponível.", "Erro",
+                                    "Sala não encontrada.", "Erro",
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     }
