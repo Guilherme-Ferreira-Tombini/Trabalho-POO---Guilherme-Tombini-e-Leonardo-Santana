@@ -37,7 +37,8 @@ public class SistemaReserva {
     public String historicoReservas() {
         StringBuilder mensage = new StringBuilder("=== Historico de reservas === \n");
         for (Reserva reserva : reservas) {
-            mensage.append(" - ").append(reserva.getSala().getIdentificacao()).append("\n");
+            mensage.append(" - ").append(reserva.getSala().getIdentificacao())
+                    .append(" --> " + reserva.getData() + ", " + reserva.getHorario()).append("\n");
         }
         return mensage.toString();
     }
